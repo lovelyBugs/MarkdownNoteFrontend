@@ -1,0 +1,28 @@
+<div style="display: flex; justify-content: space-between">
+    <div [innerHTML]="mdFileStr"></div>
+    <nz-anchor>
+        @for(header of createNestedHeaders(); track $index){
+            <nz-link [nzHref]="'#'+header.id" [nzTitle]="header.headerText">
+                @if(header.children.length > 0){
+                    @for(child of header.children; track $index){
+                        <nz-link [nzHref]="'#'+child.id" [nzTitle]="child.headerText">
+                            @if(child.children.length > 0){
+                                @for(grandChild of child.children; track $index){
+                                    <nz-link [nzHref]="'#'+grandChild.id" [nzTitle]="grandChild.headerText">
+                                        @if(grandChild.children.length > 0){
+                                            @for(greatGrandChild of grandChild.children; track $index){
+                                                <nz-link [nzHref]="'#'+greatGrandChild.id" [nzTitle]="greatGrandChild.headerText">
+                                                </nz-link>
+                                            }
+                                        }
+                                    </nz-link>
+                                }
+                            }
+                        </nz-link>
+                    }
+                }
+    
+            </nz-link>
+        }
+      </nz-anchor>
+</div>

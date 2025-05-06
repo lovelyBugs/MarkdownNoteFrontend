@@ -1,0 +1,1 @@
+ng build --configuration=development --base-href=/note/ --deploy-url=/note/

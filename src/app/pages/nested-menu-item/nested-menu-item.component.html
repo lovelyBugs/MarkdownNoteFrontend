@@ -1,0 +1,37 @@
+@if(currentMenu){
+    @if(currentMenu.subMenu.length > 0 || currentMenu.noteFiles.length > 0){
+        <li nz-submenu 
+        [nzOpen]="autoOpenSelected && noteService.isCurrentMenuSelectedOrOpened(currentMenu)" 
+        [class.ant-menu-submenu-selected]="noteService.isCurrentMenuSelectedOrOpened(currentMenu)" 
+        [nzTitle]="currentMenu.title" 
+        [nzIcon]="'folder'"
+        class="nav-item">
+            <ul>
+                @for(menu of currentMenu.subMenu; track $index){
+                    <app-nested-menu-item 
+                    [autoOpenSelected]="autoOpenSelected"
+                    [showToolTip]="showToolTip"
+                     [currentMenu]="menu"></app-nested-menu-item>
+                }
+                @for(note of currentMenu.noteFiles; track $index){
+                    <li nz-menu-item 
+                    [nzSelected]="noteService.isCurrentNoteSelected(note)" 
+                    (click)="noteService.setSelectFile(note); noteService.setSelectMenu(currentMenu)"
+                    nz-tooltip
+                    [nzTooltipTitle]="showToolTip ? note.fileName : ''"
+                    [nzTooltipPlacement]="'right'">
+                        <nz-icon nzType="file-markdown" />
+                        <a [routerLink]="note.filePath.split('/')" class="nav-link">{{note.fileName}}</a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+    <!-- @else {
+        <li nz-menu-item>
+            <nz-icon nzType="file-markdown" />
+
+            <a href="{{currentMenu.Router}}" class="nav-link">{{currentMenu.Title}}</a>
+        </li>
+    } -->
+}
